@@ -1,5 +1,6 @@
 package com.userdate.controller;
 
+import com.userdate.model.DAO;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Controller
 public class HomeController {
@@ -22,12 +24,29 @@ public class HomeController {
     @RequestMapping("/")
     public ModelAndView safeZone()
     {
+
         ModelAndView mv = new
                 ModelAndView("safezone");
         mv.addObject("message","You are NOT alone");
         mv.addObject("title", "Safe Zone");
+
         return mv;
     }
+
+    @RequestMapping("/resourcelist")
+    public ModelAndView viewresourceList () {
+        ArrayList<Resources> resourceList = DAO.getResourceList();
+
+
+        //TODO: make error.jsp
+        if (resourceList == null) {
+            return new ModelAndView("error", "errmsg", "No more resources - null");
+        }
+
+        return new ModelAndView("resourceview","rList", resourceList);
+
+    }
+
 
     @RequestMapping("/register")
     public ModelAndView register () {
@@ -39,11 +58,18 @@ public class HomeController {
     @RequestMapping("/formhandler")
         public ModelAndView formhandler(
                 @RequestParam("firstname") String firstname)
-
-
         {
+            ArrayList<Resources> resourceList = DAO.getResourceList();
+
+
+            //TODO: make error.jsp
+            if (resourceList == null) {
+                return new ModelAndView("error", "errmsg", "No more resources - null");
+            }
+
             ModelAndView mv = new ModelAndView("resourceview");
             mv.addObject("firstname", firstname);
+            mv.addObject("rList", resourceList);
 
             return mv;
         }
