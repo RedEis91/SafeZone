@@ -52,16 +52,28 @@ public class HomeController {
     @RequestMapping("/register")
     public ModelAndView register () {
         return new ModelAndView("register", "inst",
-                "Please enter info: ");
+                "Please fill in the form below to register!");
     }
 
     //action that gets called>
     @RequestMapping("/formhandler")
         public ModelAndView formhandler(
-                @RequestParam("firstname") String firstname)
+                @RequestParam("firstname") String firstName,
+                @RequestParam("lastname") String lastName,
+                @RequestParam("phonenum") long phoneNum,
+                @RequestParam("gender") String gender,
+                @RequestParam("birthday") String birthDay,
+                @RequestParam("email") String email
+    )
         {
-            ArrayList<Resources> resourceList = DAO.getResourceList();
+            boolean result = DAO.addUser(firstName,lastName,phoneNum,gender,birthDay,email);
 
+            if (result == false) {
+                //still have to write this view
+                return new ModelAndView("error", "errmsg", "User add failed");
+            }
+
+            ArrayList<Resources> resourceList = DAO.getResourceList();
 
             //TODO: make error.jsp
             if (resourceList == null) {
@@ -69,7 +81,7 @@ public class HomeController {
             }
 
             ModelAndView mv = new ModelAndView("resourceview");
-            mv.addObject("firstname", firstname);
+            mv.addObject("firstname", firstName);
             mv.addObject("rList", resourceList);
 
             return mv;
