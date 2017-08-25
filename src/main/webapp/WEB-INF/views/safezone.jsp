@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Welcome to Safe Zone!(safezone.jsp)</title>
+    <title>Welcome to Safe Zone!</title>
 </head>
 <body>
 <h1>${title}</h1>

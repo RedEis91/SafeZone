@@ -15,3 +15,4 @@ target/
 *.class
 \\#hibernate
 hibernate.cfg.xml
+DBCredentials.java
