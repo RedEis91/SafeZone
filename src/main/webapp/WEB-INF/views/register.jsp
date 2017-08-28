@@ -4,7 +4,7 @@
 <head>
     <title>Registration Page</title>
 </head>
-<body onload="getLocation()" >
+<%--<body onload="getLocation()" >--%>
 <h1>${inst}</h1>
 <form action="formhandler" method="post">
     <fieldset>
@@ -20,13 +20,21 @@
     <input type="submit" name="submit" value="Register">
 </form>
 
-<p>Click the button to get your coordinates.</p>
+<p>Your exact coordinates</p>
 
-<%--<button onclick="getLocation()">Try It</button>--%>
+<button onclick="getLocation()">Try It</button>
+
 
 <p id="demo"></p>
 
-<script>
+<form action="route" method="post">
+    <input type="text" id="Lon" name="lon"> </input>
+
+    <input type="text" id="Lat" name="lat"> </input>
+
+    <input type="submit" name="submit" value="Submit coordinates">
+
+<script >
     var x = document.getElementById("demo");
     var pos;
     function getLocation() {
@@ -40,12 +48,17 @@
     function showPosition(position) {
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
-         pos = [lat, lon];
-        x.innerHTML = "Latitude: " + pos[0] +
-            "<br>Longitude: " + pos[1];
+        pos = [lat, lon];
+//        x.innerHTML = "Latitude: " + pos[0] +
+//            "<br>Longitude: " + pos[1];
+
+        document.getElementById("Lon").value = lon;
+        document.getElementById("Lat").value = lat;
 
     }
+
 </script>
+</form>
 
 </body>
 </html>

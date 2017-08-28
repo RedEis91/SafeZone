@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriUtils;
 import com.userdate.model.Location;
+import sun.plugin.javascript.navig.Array;
 
 import javax.net.ssl.SSLException;
 import java.io.*;
@@ -145,8 +146,12 @@ public class HomeController {
 //        }
 
     @RequestMapping("/route")
-    public ModelAndView route () {
+    public ModelAndView route (@RequestParam String lat,
+                               @RequestParam String lon)
+    {
         try {
+
+            System.out.println(lat + lon);
 
             HttpClient http = HttpClientBuilder.create().build();
 
