@@ -4,7 +4,7 @@
 <head>
     <title>Registration Page</title>
 </head>
-<%--<body onload="getLocation()" >--%>
+<body onload="getLocation()" >
 <h1>${inst}</h1>
 <form action="formhandler" method="post">
     <fieldset>
@@ -22,15 +22,14 @@
 
 <p>Your exact coordinates</p>
 
-<button onclick="getLocation()">Try It</button>
-
 
 <p id="demo"></p>
 
 <form action="route" method="post">
-    <input type="text" id="Lon" name="lon"> </input>
+
 
     <input type="text" id="Lat" name="lat"> </input>
+    <input type="text" id="Lon" name="lon"> </input>
 
     <input type="submit" name="submit" value="Submit coordinates">
 
