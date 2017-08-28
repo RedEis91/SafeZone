@@ -4,7 +4,7 @@
 <head>
     <title>Registration Page</title>
 </head>
-<body>
+<body onload="getLocation()" >
 <h1>${inst}</h1>
 <form action="formhandler" method="post">
     <fieldset>
@@ -22,7 +22,7 @@
 
 <p>Click the button to get your coordinates.</p>
 
-<button onclick="getLocation()">Try It</button>
+<%--<button onclick="getLocation()">Try It</button>--%>
 
 <p id="demo"></p>
 
