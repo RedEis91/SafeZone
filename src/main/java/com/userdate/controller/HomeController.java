@@ -12,9 +12,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriUtils;
+import com.userdate.model.Location;
 
 import javax.net.ssl.SSLException;
 import java.io.*;
@@ -23,6 +25,8 @@ import java.util.ArrayList;
 
 @Controller
 public class HomeController {
+
+
 
     @RequestMapping("/")
     public ModelAndView safeZone()
@@ -35,6 +39,12 @@ public class HomeController {
 
         return mv;
     }
+
+
+        @RequestMapping(value = "/location", method = RequestMethod.GET)
+        public Location
+        return new ModelAndView;
+
 
     @RequestMapping("/resourcelist")
     public ModelAndView viewresourceList () {
@@ -49,6 +59,7 @@ public class HomeController {
         return new ModelAndView("resourceview","rList", resourceList);
 
     }
+
 
 
     @RequestMapping("/register")

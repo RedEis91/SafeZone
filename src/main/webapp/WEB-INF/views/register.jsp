@@ -38,8 +38,12 @@
     }
 
     function showPosition(position) {
-        x.innerHTML = "Latitude: " + position.coords.latitude +
-            "<br>Longitude: " + position.coords.longitude;
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        var pos = [lat, lon];
+        x.innerHTML = "Latitude: " + pos[0] +
+            "<br>Longitude: " + pos[1];
+
     }
 </script>
 
