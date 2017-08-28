@@ -28,7 +28,7 @@
 
 <script>
     var x = document.getElementById("demo");
-
+    var pos;
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -40,7 +40,7 @@
     function showPosition(position) {
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
-        var pos = [lat, lon];
+         pos = [lat, lon];
         x.innerHTML = "Latitude: " + pos[0] +
             "<br>Longitude: " + pos[1];
 
