@@ -151,6 +151,9 @@ public class HomeController {
     {
         try {
 
+            String userLat = lat;
+            String userLon = lon;
+
             System.out.println(lat + lon);
 
             HttpClient http = HttpClientBuilder.create().build();
@@ -163,7 +166,7 @@ public class HomeController {
 //                System.out.println("URI " + uri.toString() + " is OK");
 
 
-            String startURI = "https://valhalla.mapzen.com/route?json={\"locations\":[{\"lat\":42.331674,\"lon\":-83.052636,\"type\":\"break\",\"street\":\"Cass\"},{\"lat\":42.375675,\"lon\":-83.07691,\"type\":\"break\",\"street\":\"Woodward\"}],\"costing\":\"multimodal\",\"costing_options\":{\"transit\":{\"use_bus\":\"1.0\",\"use_transfers\":\"0.001\"},\"pedestrian\":{\"walking_speed\":\"4.1\"}}}&api_key=mapzen-HeGbynW";
+            String startURI = "https://valhalla.mapzen.com/route?json={\"locations\":[{\"lat\":"+userLat+",\"lon\":"+userLon+",\"type\":\"break\",\"street\":\"Cass\"},{\"lat\":42.375675,\"lon\":-83.07691,\"type\":\"break\",\"street\":\"Woodward\"}],\"costing\":\"multimodal\",\"costing_options\":{\"transit\":{\"use_bus\":\"1.0\",\"use_transfers\":\"0.001\"},\"pedestrian\":{\"walking_speed\":\"4.1\"}}}&api_key=mapzen-HeGbynW";
             String uri = UriUtils.encodeQuery(startURI, "UTF-8");
 
             HttpGet getPage = new HttpGet(uri);
