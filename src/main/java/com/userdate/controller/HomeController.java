@@ -40,11 +40,7 @@ public class HomeController {
         return mv;
     }
 
-
-        @RequestMapping(value = "/location", method = RequestMethod.GET)
-        public Location
-        return new ModelAndView;
-
+    
 
     @RequestMapping("/resourcelist")
     public ModelAndView viewresourceList () {
