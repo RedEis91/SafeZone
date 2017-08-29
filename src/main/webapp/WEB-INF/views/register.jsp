@@ -20,24 +20,30 @@
     <input type="submit" name="submit" value="Register">
 </form>
 
-<p>Your exact coordinates</p>
+<p>Please allow this page to access your location. We will give you directions to your destination.</p>
 
 
 <p ID="demo"></p>
 
 <form action="route" method="post">
 
+    <input type="text" id="lat" name="lat"> </input>
+    <input type="text" id="lon" name="lon"> </input>
+    <input type="text" name="rLat"> </input>
+    <input type="text" name="rLon"> </input>
 
-    <input type="text" ID="Lat" name="lat"> </input>
-    <input type="text" ID="Lon" name="lon"> </input>
+    <input  type="submit" name="submit" value="Submit coordinates" >
+    <!-- onsubmit="locateDestination()" -->
 
-    <input type="submit" name="submit" value="Submit coordinates">
+</form>
+
 
 <script >
     var x = document.getElementById("demo");
     var pos;
     function getLocation() {
         if (navigator.geolocation) {
+            //navigator.geolocation.getCurrentPosition(showPosition);
             navigator.geolocation.getCurrentPosition(showPosition);
         } else {
             x.innerHTML = "Geolocation is not supported by this browser.";
@@ -51,13 +57,13 @@
 //        x.innerHTML = "Latitude: " + pos[0] +
 //            "<br>Longitude: " + pos[1];
 
-        document.getElementById("Lon").value = lon;
-        document.getElementById("Lat").value = lat;
+        document.getElementById("lon").value = lon;
+        document.getElementById("lat").value = lat;
 
     }
 
 </script>
-</form>
+
 
 </body>
 </html>
