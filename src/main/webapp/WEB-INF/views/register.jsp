@@ -23,13 +23,13 @@
 <p>Your exact coordinates</p>
 
 
-<p id="demo"></p>
+<p ID="demo"></p>
 
 <form action="route" method="post">
 
 
-    <input type="text" id="Lat" name="lat"> </input>
-    <input type="text" id="Lon" name="lon"> </input>
+    <input type="text" ID="Lat" name="lat"> </input>
+    <input type="text" ID="Lon" name="lon"> </input>
 
     <input type="submit" name="submit" value="Submit coordinates">
 

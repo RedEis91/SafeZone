@@ -41,20 +41,23 @@ public class HomeController {
         return mv;
     }
 
-    
-
     @RequestMapping("/resourcelist")
     public ModelAndView viewresourceList () {
         ArrayList<Resources> resourceList = DAO.getResourceList();
-
+        ArrayList<Resources> userResourceList = DAO.getUserResourceList();
 
         //TODO: make error.jsp
         if (resourceList == null) {
-            return new ModelAndView("error", "errmsg", "No more resources - null");
+            return new ModelAndView("error", "errmsg", "No resource list - null");
+        }
+        if (userResourceList == null){
+            return new ModelAndView("error","errmsg","No user resource list - null");
         }
 
-        return new ModelAndView("resourceview","rList", resourceList);
-
+       ModelAndView mv = new ModelAndView("resourceview");
+       mv.addObject("rList",resourceList);
+       mv.addObject("usList",userResourceList);
+       return mv;
     }
 
 
