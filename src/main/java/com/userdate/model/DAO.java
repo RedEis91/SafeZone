@@ -1,6 +1,6 @@
 package com.userdate.model;
 
-import com.userdate.controller.Resources;
+import com.userdate.controller.Resource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,12 +8,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-/**
- * Created by Grand Circus Student on 8/23/2017.
- */
 public class DAO {
 
-    public static ArrayList<Resources> getResourceList() {
+    public static ArrayList<Resource> getResourceList() {
         //connection info was pulled out into DBCredentials
         //so that file can be hidden
 
@@ -30,18 +27,17 @@ public class DAO {
                     DBCredentials.PASSWORD);
 
             // create the db statement
-
-            String readResourcesCommand = "select id, Organization, Zip, Website, Phone, Address, Description from resources";
+            String readResourcesCommand = "select ID, Organization, Zip, Website, Phone, Address, Description from resources";
             Statement readResources = mysqlConnection.createStatement();// creates the statement
 
             ResultSet results = readResources.executeQuery(readResourcesCommand);// executes the statement
             // array list of customers
-            ArrayList<Resources> resourceList = new ArrayList<Resources>();
+            ArrayList<Resource> resourceList = new ArrayList<Resource>();
 
             // map from the ResultSet to the ArrayList
             while(results.next())
             {
-                Resources temp = new Resources(results.getInt(1),
+                Resource temp = new Resource(results.getInt(1),
                         results.getString(2), results.getString(3), results.getString(4),
                         results.getLong(5), results.getString(6),
                         results.getString(7));
@@ -63,8 +59,7 @@ public class DAO {
         }
     }
 
-    public static ArrayList<Resources> getUserResourceList(){
-
+    public static ArrayList<Resource> getUserResourceList(){
         try {
             // Load driver
             Class.forName("com.mysql.jdbc.Driver");
@@ -77,19 +72,24 @@ public class DAO {
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
 
-            // create the db statement
+            //String to append to Database query when user is in need of a FOOD based resource
+            String userSelection = "Food";
+            String isFood = userSelection + " = 1";
 
-            String readResourcesCommand = "select Organization, Latitude, Longitude from resources where Food = 1";
+
+            //db statement
+            //String readResourcesCommand is a SQL query to select all rows, determined by user's need
+            String readResourcesCommand = "select Organization, Latitude, Longitude from resources where " + isFood;
             Statement readResources = mysqlConnection.createStatement();// creates the statement
 
             ResultSet results = readResources.executeQuery(readResourcesCommand);// executes the statement
             // array list of customers
-            ArrayList<Resources> userResourceList = new ArrayList<Resources>();
+            ArrayList<Resource> userResourceList = new ArrayList<Resource>();
 
             // map from the ResultSet to the ArrayList
             while(results.next())
             {
-                Resources temp = new Resources(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
+                Resource temp = new Resource(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
                 userResourceList.add(temp);
 
             }

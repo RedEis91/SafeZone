@@ -1,7 +1,6 @@
 package com.userdate.controller;
 
 import com.userdate.model.DAO;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -11,25 +10,16 @@ import org.json.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriUtils;
-import com.userdate.model.Location;
-import sun.plugin.javascript.navig.Array;
 
-import javax.net.ssl.SSLException;
-import java.io.*;
-import java.net.*;
 import java.util.ArrayList;
 
 @Controller
 public class HomeController {
-
-
-    private String rLon;
+//    private String rLon;
 
     @RequestMapping("/")
     public ModelAndView safeZone()
@@ -45,8 +35,13 @@ public class HomeController {
 
     @RequestMapping("/resourcelist")
     public ModelAndView viewresourceList () {
-        ArrayList<Resources> resourceList = DAO.getResourceList();
-        ArrayList<Resources> userResourceList = DAO.getUserResourceList();
+        //Generates ArrayList made of Resource objects from database via the DAO (Document Access Object)
+        //DAO uses method called getResourceList to pull every row from the Resources table in DB
+        ArrayList<Resource> resourceList = DAO.getResourceList();
+        //Generates ArrayList made of Resource objects from database via the DAO (Document Access Object)
+        //based on what category(s) of resource(s) user selects, DAO.getUserResourceList method
+        //pulls every applicable row from the Resources table in DB and stores in ArrayList userResourceList
+        ArrayList<Resource> userResourceList = DAO.getUserResourceList();
 
         //TODO: make error.jsp
         if (resourceList == null) {
@@ -70,7 +65,7 @@ public class HomeController {
                 "Please fill in the form below to register!");
     }
 
-    //action that gets called>
+    //action that gets called when user registers
     @RequestMapping("/formhandler")
         public ModelAndView formhandler(
                 @RequestParam("firstname") String firstName,
@@ -88,7 +83,7 @@ public class HomeController {
                 return new ModelAndView("error", "errmsg", "User add failed");
             }
 
-            ArrayList<Resources> resourceList = DAO.getResourceList();
+            ArrayList<Resource> resourceList = DAO.getResourceList();
 
             //TODO: make error.jsp
             if (resourceList == null) {
@@ -101,54 +96,6 @@ public class HomeController {
 
             return mv;
         }
-
-//        @RequestMapping("/department")
-//        public ModelAndView department () {
-//            try {
-//                //java object that is going to talk across the internet for us.
-//                // This HttpClient will make requests from the other server
-//                HttpClient http = HttpClientBuilder.create().build();
-//                //HttpHost holds connection info
-//                HttpHost host = new HttpHost("transit.land", 443, "https");
-//
-//                //HttpGet will actually retrieves the information from the specific URI
-//                HttpGet getPage = new HttpGet("/api/v1/operators/o-dpsc-detroitdepartmentoftransportation");
-//                //this actually returns a JSON object
-//
-//                //actually making the HttpGet happen and pulling in the response
-//                HttpResponse resp = http.execute(host, getPage);
-//                //response has status code within it to tell us success, failure, 505, etc
-//
-//                //get actual content (JSON string) and turn it into object
-//                //"entity" is the meat of the response
-//                String jsonString = EntityUtils.toString(resp.getEntity());
-//                //turn the string into an actual JSON object
-//                JSONObject json = new JSONObject(jsonString);
-//                String department = json.get("name").toString();
-//
-//                //get the response code and some info from JSON
-//                int status = resp.getStatusLine().getStatusCode();
-//
-//
-//                System.out.println(status);
-//                //create JSON data
-////                JSONString department = json.get("name");
-//
-//
-//                //put into web application (ModelAndView)
-//                ModelAndView moo = new ModelAndView("department");
-//                moo.addObject("department", department);
-//                moo.addObject("title", "Department");
-//
-//                return moo;
-//            }
-//            catch (Exception x) {
-//                x.printStackTrace();
-//            }
-//
-//            //cue to read the log during debugging process, make the null into a user friendly message
-//        return null;
-//        }
 
     @RequestMapping("/route")
     public ModelAndView route (@RequestParam("lat") String userLat,
@@ -181,8 +128,42 @@ public class HomeController {
             JSONArray maneuvers = json.getJSONObject("trip").getJSONArray("legs").getJSONObject(0).getJSONArray("maneuvers");
             ArrayList<String> instructions = new ArrayList<String>();
             for (int i = 0; i < maneuvers.length(); i++) {
-                String instruction = maneuvers.getJSONObject(i).getString("verbal_pre_transition_instruction");
-                instructions.add(instruction);
+//                String instruction = maneuvers.getJSONObject(i).getString("verbal_pre_transition_instruction");
+//                instructions.add(instruction);
+                if (maneuvers.getJSONObject(i).has("arrive_instruction") ){
+                    String arriveInstruction = maneuvers.getJSONObject(i).getString("arrive_instruction");
+                    instructions.add(arriveInstruction);}
+
+                if (maneuvers.getJSONObject(i).has("verbal_pre_transition_instruction")){
+                    String preTransitionInstruction = maneuvers.getJSONObject(i).getString("verbal_pre_transition_instruction");
+                    instructions.add(preTransitionInstruction);}
+
+                if (maneuvers.getJSONObject(i).has("verbal_transition_alert_instruction")){
+                    String transitionAlertInstruction = maneuvers.getJSONObject(i).getString("verbal_transition_alert_instruction");
+                    instructions.add(transitionAlertInstruction);}
+
+                if (maneuvers.getJSONObject(i).has("instruction")){
+                    String instruction = maneuvers.getJSONObject(i).getString("instruction");
+                    instructions.add(instruction);}
+
+                if (maneuvers.getJSONObject(i).has("verbal_post_transition_instruction")){
+                    String postTransitionInstruction = maneuvers.getJSONObject(i).getString("verbal_post_transition_instruction");
+                    instructions.add(postTransitionInstruction);}
+
+                if (maneuvers.getJSONObject(i).has("verbal_depart_instruction")){
+                    String verbalDepartInstruction = maneuvers.getJSONObject(i).getString("verbal_depart_instruction");
+                    instructions.add(verbalDepartInstruction);}
+
+                if (maneuvers.getJSONObject(i).has("verbal_arrive_instruction")){
+                    String verbalArriveInstruction = maneuvers.getJSONObject(i).getString("arrive_instruction");
+                    instructions.add(verbalArriveInstruction);}
+
+                if (maneuvers.getJSONObject(i).has("depart_instruction")){
+                    String departInstruction = maneuvers.getJSONObject(i).getString("depart_instruction");
+                    instructions.add(departInstruction);}
+
+
+//
             }
             //get the response code and some info from JSON
             int status = resp.getStatusLine().getStatusCode();

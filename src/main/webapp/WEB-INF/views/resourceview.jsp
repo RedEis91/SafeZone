@@ -16,30 +16,34 @@
 You are not alone, ${firstname}<br>
 Here is the <strong>entire</strong> list of SafeZone's Resource List:
 
-<ul>
-<c:forEach var="item"  items="${rList}">
 
-    <li>${item.ID}</li>
-    <li>${item.organization}</li>
-    <li>${item.zip}</li>
-    <li>${item.website}</li>
-    <li>${item.phone}</li>
-    <li>${item.address}</li>
-    <li>${item.description}</li>
+<c:forEach var="item"  items="${rList}">
+<div class="resource">
+
+    <%--${item.ID}--%>
+  <h1> ${item.organization} </h1>
+        <p> ${item.description} </p>
+        <span>Homepage: </span><a href="http://${item.website}"> ${item.website} </a>
+    ${item.phone}
+   <p> ${item.address} ,
+            ${item.zip}
+   </p>
 
 </c:forEach>
-</ul>
 
+</div>
 Here is a list of SafeZone's Resources whose <strong> category is "Food" </strong>:
-<ul>
+
+<div class="selectedResource">
+    <!--Returns list of resources where category selected is "Food" !-->
 <c:forEach var="item" items="${usList}">
 
-    <li>${item.organization}</li>
-    <li>${item.latitude}</li>
-    <li>${item.longitude}</li>
+   <h1 class="organization"> ${item.organization} </h1>
+    <p class="lat">Lat: ${item.latitude} </p>
+    <p class="lon">Lon: ${item.longitude}</p>
 
 </c:forEach>
-</ul>
+</div>
 <%-- ${resource} --%>
 </body>
 </html>

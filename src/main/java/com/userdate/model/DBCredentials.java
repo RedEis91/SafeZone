@@ -6,5 +6,5 @@ package com.userdate.model;
 public class DBCredentials {
     public static final String DB_ADDRESS = "jdbc:mysql://localhost:3306/safezone";
     public static final String USERNAME = "root";
-    public static final String PASSWORD = "LetMeIn";
+    public static final String PASSWORD = "Createordie!1991";
 }

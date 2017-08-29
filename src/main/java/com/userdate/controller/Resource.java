@@ -3,7 +3,7 @@ package com.userdate.controller;
 /**
  * Created by Grand Circus Student on 8/23/2017.
  */
-public class Resources {
+public class Resource {
     private int ID;
     private String Organization;
     private String Zip;
@@ -23,15 +23,17 @@ public class Resources {
     private float longitude;
 
 
-    //specific constructor for when user wants resources that are in a particular category
-    public Resources(String Organization, float latitude, float longitude) {
+    //Constructs an instance of a Resource Object using organization name, latitude and longitude
+    // takes lat,lon info from form to construct API call string that then generates a bus route to that Resource
+    public Resource(String Organization, float latitude, float longitude) {
         this.Organization = Organization;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    //returns entire list with this info. below on our resourceview View
-    public Resources(int ID, String Organization, String Zip, String website, long Phone, String address, String description) {
+    //Constructor to generate entire list of available resources, includes
+    //parameter values(Datatype varName as object attributes.
+    public Resource(int ID, String Organization, String Zip, String website, long Phone, String address, String description) {
         this.ID = ID;
         this.Organization = Organization;
         this.Zip = Zip;
@@ -41,7 +43,7 @@ public class Resources {
         this.description = description;
     }
 
-    public Resources(int ID, String Organization, String Zip, String website, long Phone, String address, String description, boolean food, boolean clothing, boolean counseling, boolean healthcare, boolean education, boolean job, boolean female, boolean male, float latitude, float longitude) {
+    public Resource(int ID, String Organization, String Zip, String website, long Phone, String address, String description, boolean food, boolean clothing, boolean counseling, boolean healthcare, boolean education, boolean job, boolean female, boolean male, float latitude, float longitude) {
         this.ID = ID;
         this.Organization = Organization;
         this.Zip = Zip;
@@ -61,7 +63,7 @@ public class Resources {
         this.longitude = longitude;
     }
 
-    public Resources (){
+    public Resource(){
         ID =0;
         Organization ="";
         Zip ="";
@@ -219,7 +221,7 @@ public class Resources {
 
     @Override
     public String toString() {
-        return "Resources{" +
+        return "Resource{" +
                 "ID=" + ID +
                 ", Organization='" + Organization + '\'' +
                 ", Zip='" + Zip + '\'' +
