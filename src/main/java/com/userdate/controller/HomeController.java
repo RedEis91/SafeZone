@@ -156,26 +156,10 @@ public class HomeController {
 //       TODO- resourceview.jsp : form of hidden fields. javascript fills in hidden view forms with userLat and userLon
 // & jsp page receives resourceLat and resourceLon from Controller via the DAO
         try {
-            System.out.println("I'm working");
-//            String userLat = lat;
-//            String userLon = lon;
-//            String resourceLat = rLat;
-//            String resourceLon = rLon;
-            System.out.println("I worked");
 
-//            System.out.println(lat + lon);
 
             HttpClient http = HttpClientBuilder.create().build();
-
-//            String myURL = "https://valhalla.mapzen.com/route?json={%22locations%22:[{%22lat%22:42.331674,%22lon%22:-83.052636,%22type%22:%22break%22,%22street%22:%22Cass%22},{%22lat%22:42.375675,%22lon%22:-83.07691,%22type%22:%22break%22,%22street%22:%22Woodward%22}],%22costing%22:%22multimodal%22,%22costing_options%22:{%22transit%22:{%22use_bus%22:%221.0%22,%22use_transfers%22:%220.001%22},%22pedestrian%22:{%22walking_speed%22:%224.1%22}}}&api_key=mapzen-HeGbynW";
-//
-//                URL url = new URL(myURL);
-//                String nullFragment = null;
-//                URI uri = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), nullFragment);
-//                System.out.println("URI " + uri.toString() + " is OK");
-
-
-            String startURI = "https://valhalla.mapzen.com/route?json={\"locations\":[{\"lat\":"+userLat+",\"lon\":"+userLon+",\"type\":\"break\",\"street\":\"Cass\"},{\"lat\":"+resourceLat+",\"lon\":"+resourceLon+",\"type\":\"break\",\"street\":\"Woodward\"}],\"costing\":\"multimodal\",\"costing_options\":{\"transit\":{\"use_bus\":\"1.0\",\"use_transfers\":\"0.001\"},\"pedestrian\":{\"walking_speed\":\"4.1\"}}}&api_key=mapzen-HeGbynW";
+            String startURI = "https://valhalla.mapzen.com/route?json={\"locations\":[{\"lat\":"+userLat+",\"lon\":"+userLon+",\"type\":\"break\"},{\"lat\":"+resourceLat+",\"lon\":"+resourceLon+",\"type\":\"break\"}],\"costing\":\"multimodal\",\"costing_options\":{\"transit\":{\"use_bus\":\"1.0\",\"use_transfers\":\"0.001\"},\"pedestrian\":{\"walking_speed\":\"4.1\"}}}&api_key=mapzen-HeGbynW";
             String uri = UriUtils.encodeQuery(startURI, "UTF-8");
             System.out.println(startURI);
             HttpGet getPage = new HttpGet(uri);
