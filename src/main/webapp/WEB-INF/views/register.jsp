@@ -20,7 +20,7 @@
     <input type="submit" name="submit" value="Register">
 </form>
 
-<p>Your exact coordinates</p>
+<p>Please allow this page to access your location. We will give you directions to your destination.</p>
 
 
 <p id="demo"></p>
@@ -28,20 +28,36 @@
 <form action="route" method="post">
 
 
-    <input type="text" id="Lat" name="lat"> </input>
-    <input type="text" id="Lon" name="lon"> </input>
+    <input type="text" id="lat" name="lat"> </input>
+    <input type="text" id="lon" name="lon"> </input>
+    <input type="text" id="rLat" name="rLat"> </input>
+    <input type="text" id="rLon" name="rLon"> </input>
 
-    <input type="submit" name="submit" value="Submit coordinates">
+    <input  type="submit" name="submit" value="Submit coordinates" >
+    <!-- onsubmit="locateDestination()" -->
+
+</form>
 
 <script >
     var x = document.getElementById("demo");
     var pos;
     function getLocation() {
         if (navigator.geolocation) {
+            //navigator.geolocation.getCurrentPosition(showPosition);
             navigator.geolocation.getCurrentPosition(showPosition);
         } else {
             x.innerHTML = "Geolocation is not supported by this browser.";
         }
+    }
+
+    function locateDestination() {
+        console.log("I'm working");
+        var rLat = document.getElementById("rLat");
+        var rLon = document.getElementByIe("rLon");
+        console.log("I worked");
+
+
+
     }
 
     function showPosition(position) {
@@ -51,8 +67,8 @@
 //        x.innerHTML = "Latitude: " + pos[0] +
 //            "<br>Longitude: " + pos[1];
 
-        document.getElementById("Lon").value = lon;
-        document.getElementById("Lat").value = lat;
+        document.getElementById("lon").value = lon;
+        document.getElementById("lat").value = lat;
 
     }
 
