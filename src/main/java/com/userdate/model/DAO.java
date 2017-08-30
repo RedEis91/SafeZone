@@ -165,7 +165,7 @@ public class DAO {
 
             //if (result == 1)
             //this addUser method returns true within our formhandler method when a successful new entry into our user table
-            //was made, from information that was passed through to this method 
+            //was made, from information that was passed through to this method
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
