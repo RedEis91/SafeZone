@@ -35,7 +35,16 @@ public class HomeController {
     }
 
     @RequestMapping("/resourcelist")
-    public ModelAndView viewresourceList (@RequestParam("food") String food) {
+    public ModelAndView viewresourceList (@RequestParam("food") String food,
+                                          @RequestParam("shelter") String shelter,
+                                          @RequestParam("clothing") String clothing,
+                                          @RequestParam("counseling") String counseling,
+                                          @RequestParam("healthcare") String healthcare,
+                                          @RequestParam("education") String education,
+                                          @RequestParam("job") String job)
+
+
+    {
 
         //Generates ArrayList made of Resource objects from database via the DAO (Document Access Object)
         //DAO uses method called getResourceList to pull every row from the Resources table in DB
@@ -43,7 +52,7 @@ public class HomeController {
         //Generates ArrayList made of Resource objects from database via the DAO (Document Access Object)
         //based on what category(s) of resource(s) user selects, DAO.getUserResourceList method
         //pulls every applicable row from the Resources table in DB and stores in ArrayList userResourceList
-        ArrayList<Resource> userResourceList = DAO.getUserResourceList(food);
+        ArrayList<Resource> userResourceList = DAO.getUserResourceList(food, shelter, clothing, counseling, healthcare, education, job);
 
         //if resourcelist is returned from the DAO and it is empty (null), then our error.jsp page will contain a model
         // called "errmsg" that will print out a message

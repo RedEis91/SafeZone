@@ -47,9 +47,7 @@ public class DAO {
                         results.getLong(5), results.getString(6),
                         results.getString(7));
                 resourceList.add(temp);
-
             }
-
             //debugging
             for (int i = 0; i > resourceList.size(); i++) {
                 System.out.println(resourceList.get(i));
@@ -64,64 +62,49 @@ public class DAO {
         }
     }
 
-
-
-    public static ArrayList<Resource> getUserResourceList(String food, String shelter, String clothing, String counseling, String healthcare, String education, String job, String female, String male){
+    public static ArrayList<Resource> getUserResourceList(String food, String shelter, String clothing, String counseling,
+String healthcare, String education, String job)
+    {
         try {
             // Load driver
             Class.forName("com.mysql.jdbc.Driver");
             // DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-
             // create the db connection object
             Connection mysqlConnection;
             mysqlConnection = DriverManager.getConnection(
                     DBCredentials.DB_ADDRESS,
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
-
-            //Byte values representing the boolean values of the categories of our database
-            //used to construct String readResourcesCommand to append to Database query
-            // when user is in need of this/these resource(s)
-
-            //byte values represent resources user is currently in need of.
-
-//            byte shelter = 0;
-//            byte clothing = 0;
-//            byte counseling = 0;
-//            byte healthcare = 0;
-//            byte education = 0;
-//            byte job = 0;
-//            byte female = 0;
-            //int male = 0;
-
-
-
             //db statement
             //String readResourcesCommand is a SQL query to select all rows, determined by user's need (which category of
             //resources they would like) such as Food, Shelter, Healthcare, Education, etc. on the resource request form
-            PreparedStatement readResourcesCommand =
-                    //give me all rows from resources table in safezone database WHERE.....(these conditions are met)
-                    mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Food = ? AND Shelter = ? AND Clothing = ? AND Counseling = ? AND Healthcare = ? AND Education = ? AND Job = ? AND Female = ? and Male = ? ");
-            readResourcesCommand.setString(1, food);
-            readResourcesCommand.setString(2, shelter);
-            readResourcesCommand.setString(3, clothing);
-            readResourcesCommand.setString(4, counseling);
-            readResourcesCommand.setString(5, healthcare);
-            readResourcesCommand.setString(6, education);
-            readResourcesCommand.setString(7, job);
-            readResourcesCommand.setString(8, female);
-            readResourcesCommand.setString(9, male);
+            String SQLQuery = "SELECT Organization, Latitude, Longitude FROM resources";
+            ArrayList<String> resourceColumns = new ArrayList<String>();
+            resourceColumns.add(food);
+            resourceColumns.add(shelter);
+            resourceColumns.add(clothing);
+            resourceColumns.add(counseling);
+            resourceColumns.add(healthcare);
+            resourceColumns.add(education);
+            resourceColumns.add(job);
+            for (int i = 0; i < resourceColumns.size(); i++) {
+                do {
+                    if (resourceColumns.get(i).equalsIgnoreCase("1")){
+                    SQLQuery = SQLQuery.concat(" WHERE ").concat(resourceColumns.get(i) + " = 1 AND ");}
 
+                } while (resourceColumns.get(i+1) != null);
+
+                if (resourceColumns.get(i).equalsIgnoreCase("1")){
+                    SQLQuery = SQLQuery.concat(" WHERE " + resourceColumns.get(i) + " = 1");
+                }
+
+            }
+
+
+            System.out.println("Your SQL query is " + SQLQuery + " yeah?");
+            PreparedStatement readResourcesCommand = mysqlConnection.prepareStatement(SQLQuery);
             ResultSet results = readResourcesCommand.executeQuery();
 
-//                            " AND Shelter = 1 AND Clothing = 0 AND Counseling = 0 AND Healthcare = 0 " +
-//                            "AND Education = 0 AND Job = 1 AND Female = 1 and Male = 0";
-
-
-//                    +food+ ", Shelter = " + shelter + ", Clothing = " + clothing + ", Counseling = " + counseling
-//                    + ", Healthcare = " + healthcare + ", Education = " + education + ", Job = " + job  + ", Female = " + female + ", Male = " + male;
-//            Statement readResources = mysqlConnection.createStatement();// creates the statement
-//
 //            ResultSet results = readResources.executeQuery(readResourcesCommand);// executes the statement
             // creates an empty array list called userResourceList that refers to our Resource class
             ArrayList<Resource> userResourceList = new ArrayList<Resource>();
