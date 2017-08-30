@@ -66,7 +66,7 @@ public class DAO {
 
 
 
-    public static ArrayList<Resource> getUserResourceList(String food){
+    public static ArrayList<Resource> getUserResourceList(String food, String shelter, String clothing, String counseling, String healthcare, String education, String job, String female, String male){
         try {
             // Load driver
             Class.forName("com.mysql.jdbc.Driver");
@@ -101,9 +101,17 @@ public class DAO {
             //resources they would like) such as Food, Shelter, Healthcare, Education, etc. on the resource request form
             PreparedStatement readResourcesCommand =
                     //give me all rows from resources table in safezone database WHERE.....(these conditions are met)
-                    mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Food = ?");
-
+                    mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Food = ? AND Shelter = ? AND Clothing = ? AND Counseling = ? AND Healthcare = ? AND Education = ? AND Job = ? AND Female = ? and Male = ? ");
             readResourcesCommand.setString(1, food);
+            readResourcesCommand.setString(2, shelter);
+            readResourcesCommand.setString(3, clothing);
+            readResourcesCommand.setString(4, counseling);
+            readResourcesCommand.setString(5, healthcare);
+            readResourcesCommand.setString(6, education);
+            readResourcesCommand.setString(7, job);
+            readResourcesCommand.setString(8, female);
+            readResourcesCommand.setString(9, male);
+
             ResultSet results = readResourcesCommand.executeQuery();
 
 //                            " AND Shelter = 1 AND Clothing = 0 AND Counseling = 0 AND Healthcare = 0 " +
