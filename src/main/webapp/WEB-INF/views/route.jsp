@@ -14,6 +14,10 @@
 <body>
 <h1>Status: ${status}</h1>
 
+<%--Below, we have a for each loop that references our model called 'insturctions' which contains an ArrayList of Strings --%>
+<%--that are step-by-step instructions for the user to get from their location to their destination. We use the "var=item" to --%>
+<%--access the elements in that arraylist--%>
+
 <c:forEach var="item" items="${instructions}">
     <p>${item}</p>
 

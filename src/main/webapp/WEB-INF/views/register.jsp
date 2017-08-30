@@ -6,6 +6,10 @@
 </head>
 <body onload="getLocation()" >
 <h1>${inst}</h1>
+
+<%--form below allows the user to input their info and when they press submit, all the info colllected will be passed through --%>
+<%--the formhandler method in our Home Controller --%>
+
 <form action="formhandler" method="post">
     <fieldset>
         <legend>User Registration</legend>
@@ -25,6 +29,9 @@
 
 <p ID="demo"></p>
 
+<%--this form grabs the user's current location through their device's GPS and it will alos get the latitude and longitude --%>
+<%--of their destination
+When the submit button is pressed, the info. will be sent to the route method that is in our Home Controller --%>
 <form action="route" method="post">
 
     <input type="text" id="lat" name="lat"> </input>
@@ -37,7 +44,10 @@
 
 </form>
 
-
+<%--//this JavaScript script runs a function that is called within our opening body tag (at the top) which gets the user's --%>
+<%--current location by latitude and longitude
+Then we set the user's latitude and longitude values equal to their corresponding id (lat & lon) in the above form to be passed
+to the route method in our Home Controller--%>
 <script >
     var x = document.getElementById("demo");
     var pos;
