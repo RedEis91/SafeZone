@@ -35,14 +35,15 @@ public class HomeController {
     }
 
     @RequestMapping("/resourcelist")
-    public ModelAndView viewresourceList () {
+    public ModelAndView viewresourceList (@RequestParam("food") String food) {
+
         //Generates ArrayList made of Resource objects from database via the DAO (Document Access Object)
         //DAO uses method called getResourceList to pull every row from the Resources table in DB
         ArrayList<Resource> resourceList = DAO.getResourceList();
         //Generates ArrayList made of Resource objects from database via the DAO (Document Access Object)
         //based on what category(s) of resource(s) user selects, DAO.getUserResourceList method
         //pulls every applicable row from the Resources table in DB and stores in ArrayList userResourceList
-        ArrayList<Resource> userResourceList = DAO.getUserResourceList();
+        ArrayList<Resource> userResourceList = DAO.getUserResourceList(food);
 
         //if resourcelist is returned from the DAO and it is empty (null), then our error.jsp page will contain a model
         // called "errmsg" that will print out a message
@@ -68,6 +69,11 @@ public class HomeController {
        return mv;
     }
 
+    @RequestMapping("/resourceselector")
+    public ModelAndView resourceSelector() {
+
+        return new ModelAndView ("resourceselector");
+    }
 
 
     @RequestMapping("/register")
