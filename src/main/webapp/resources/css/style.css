@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide|Exo+2|Open+Sans');
+
+body{
+        color: #FFFFFF;
+        background-color: #011C51;
+    }
+
+h1  {
+        font-family: 'Audiowide', cursive;
+        color: #FBEC5D;
+    }
+
+p   {
+        font-family: 'Open Sans', sans-serif;
+    }
+
+a   {
+    font-family: 'Exo 2', sans-serif;
+    color: #FBEC5D;
+    }
+
+a:visited, a:hover {
+    color: #0B0033;
+    }
