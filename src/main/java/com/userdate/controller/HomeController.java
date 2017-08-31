@@ -19,62 +19,42 @@ import java.util.ArrayList;
 
 @Controller
 public class HomeController {
-//    private String rLon;
-
     @RequestMapping("/")
     public ModelAndView safeZone()
     {
-        //On our homepage (which is a view called safezone (safezone.jsp), we are passing text ("You are NOT alone")
-        //through a model called ' message'. Additionally, we are passing text ("Safe Zone") through a model called 'title'
-        ModelAndView mv = new
-                ModelAndView("safezone");
+        ModelAndView mv = new ModelAndView("safezone");
         mv.addObject("message","You are NOT alone");
         mv.addObject("title", "Safe Zone");
-
         return mv;
     }
 
-    @RequestMapping("/resourcelist")
-    public ModelAndView viewresourceList (@RequestParam("food") String food) {
-
-        //Generates ArrayList made of Resource objects from database via the DAO (Document Access Object)
-        //DAO uses method called getResourceList to pull every row from the Resources table in DB
+    @RequestMapping("/resourceview")
+    public ModelAndView resourceView () {
         ArrayList<Resource> resourceList = DAO.getResourceList();
-        //Generates ArrayList made of Resource objects from database via the DAO (Document Access Object)
-        //based on what category(s) of resource(s) user selects, DAO.getUserResourceList method
-        //pulls every applicable row from the Resources table in DB and stores in ArrayList userResourceList
-        ArrayList<Resource> userResourceList = DAO.getUserResourceList(food);
-
-        //if resourcelist is returned from the DAO and it is empty (null), then our error.jsp page will contain a model
-        // called "errmsg" that will print out a message
-        //that says " No resource list - null"
         if (resourceList == null) {
             return new ModelAndView("error", "errmsg", "No resource list - null");
         }
-
-        //if userResourceList is returned from the DAO and it is empty (null), then our error.jsp page will contain a model
-        // called "errmsg" that will print out a message
-        //that says "No user resource list - null"
-        if (userResourceList == null){
-            return new ModelAndView("error","errmsg","No user resource list - null");
-        }
-
-        //on your resourceview.jsp page, we are passing an ArrayList called resourcelist to the page via the model called
-        //"rList"
-        //Additionally, on the same.jsp page, we are passing an ArrayList called userResourceList to the page via the model
-        //called "usList"
        ModelAndView mv = new ModelAndView("resourceview");
        mv.addObject("rList",resourceList);
-       mv.addObject("usList",userResourceList);
        return mv;
     }
 
     @RequestMapping("/resourceselector")
-    public ModelAndView resourceSelector() {
-
-        return new ModelAndView ("resourceselector");
+    public ModelAndView resourceSelector () {
+       ModelAndView mv = new ModelAndView("resourceselector");
+       return mv;
     }
 
+    @RequestMapping("/filterResources")
+    public ModelAndView filterResources (@RequestParam("food") String food) {
+        ArrayList<Resource> userResourceList = DAO.getUserResourceList(food);
+        if (userResourceList == null){
+            return new ModelAndView("error","errmsg","No user resource list - null");
+        }
+        ModelAndView mv = new ModelAndView("resourceselector");
+        mv.addObject("usList",userResourceList);
+        return mv;
+    }
 
     @RequestMapping("/register")
     public ModelAndView register () {
@@ -82,48 +62,26 @@ public class HomeController {
                 "Please fill in the form below to register!");
     }
 
-    //action that gets called when user registers and presses the submit button (action="formhandler")
     @RequestMapping("/formhandler")
         public ModelAndView formhandler(
                 @RequestParam("firstname") String firstName,
                 @RequestParam("lastname") String lastName,
                 @RequestParam("phonenum") long phoneNum,
-                @RequestParam("gender") String gender,
-                @RequestParam("birthday") String birthDay,
                 @RequestParam("email") String email
     )
 
-    //formhandler method is taking in form data (as a @RequestParam) that was submitted by the user on our register.jsp page
         {
-            //here our DAO method is called and pass through each item from our user register form and addes it to the database
-            //then it returns a boolean where 'true' means that the user's info was added to our db
-            //if false (see below) then an error msg is displayed on our error.jsp page and the message "User add failed"
-            //is displayed through our model called 'errmsg'
-            boolean result = DAO.addUser(firstName,lastName,phoneNum,gender,birthDay,email);
-
+            boolean result = DAO.addUser(firstName,lastName,phoneNum, email);
             if (result == false) {
-                //still have to write this view
                 return new ModelAndView("error", "errmsg", "User add failed");
             }
-
-            //here we are calling the getResourceList method in our DAO that return an ArrayList called resourceList
-            //that refers to our Resource class
-            //note: this ArrayList gets all of our resources that are listed in our db
             ArrayList<Resource> resourceList = DAO.getResourceList();
-
-            //if resourcelist is returned from the DAO and it is empty (null), then our error.jsp page will contain a model
-            // called "errmsg" that will print out a message
-            //that says " No resource list - null"
             if (resourceList == null) {
                 return new ModelAndView("error", "errmsg", "No more resources - null");
             }
-
-            //on our resourceview.jsp page, we pass through the user's first name through a model called 'firstname' and
-            //we also pass the ArrayList called resourceList to the jsp.page through a model called 'rList'
             ModelAndView mv = new ModelAndView("resourceview");
             mv.addObject("firstname", firstName);
             mv.addObject("rList", resourceList);
-
             return mv;
         }
 
@@ -133,11 +91,7 @@ public class HomeController {
                                @RequestParam("rLat") String resourceLat,
                                 @RequestParam("rLon") String resourceLon)
     {
-        //info above was passed to this method via the submit button on the second form of our register.jsp page
-        //on that page when the submit button is pressed, the action says to take the info in that form and pass it through
-        //this method
     //TODO- resourceview.jsp : form of hidden fields. javascript fills in hidden view forms with userLat and userLon
-// & jsp page receives resourceLat and resourceLon from Controller via the DAO
         try {
             //here we begin to form a connection to our Mapzen API
             //below we pass our user lat and lon plus their destination's lat and lon through the API URL which returns an object
@@ -148,12 +102,10 @@ public class HomeController {
             String uri = UriUtils.encodeQuery(startURI, "UTF-8");
             System.out.println(startURI);
             HttpGet getPage = new HttpGet(uri);
-
             //this actually returns a JSON object
             //actually making the HttpGet happen and pulling in the response
             HttpResponse resp = http.execute(getPage);
             //response has status code within it to tell us success, failure, 505, etc
-
             //get actual content (JSON string) and turn it into object
             //"entity" is the meat of the response
             String jsonString = EntityUtils.toString(resp.getEntity());
@@ -165,56 +117,40 @@ public class HomeController {
             JSONArray maneuvers = json.getJSONObject("trip").getJSONArray("legs").getJSONObject(0).getJSONArray("maneuvers");
             ArrayList<String> instructions = new ArrayList<String>();
             for (int i = 0; i < maneuvers.length(); i++) {
-//                String instruction = maneuvers.getJSONObject(i).getString("verbal_pre_transition_instruction");
-//                instructions.add(instruction);
                 if (maneuvers.getJSONObject(i).has("arrive_instruction") ){
                     String arriveInstruction = maneuvers.getJSONObject(i).getString("arrive_instruction");
                     instructions.add(arriveInstruction);}
-
                 if (maneuvers.getJSONObject(i).has("verbal_pre_transition_instruction")){
                     String preTransitionInstruction = maneuvers.getJSONObject(i).getString("verbal_pre_transition_instruction");
                     instructions.add(preTransitionInstruction);}
-
                 if (maneuvers.getJSONObject(i).has("verbal_transition_alert_instruction")){
                     String transitionAlertInstruction = maneuvers.getJSONObject(i).getString("verbal_transition_alert_instruction");
                     instructions.add(transitionAlertInstruction);}
-
                 if (maneuvers.getJSONObject(i).has("instruction")){
                     String instruction = maneuvers.getJSONObject(i).getString("instruction");
                     instructions.add(instruction);}
-
                 if (maneuvers.getJSONObject(i).has("verbal_post_transition_instruction")){
                     String postTransitionInstruction = maneuvers.getJSONObject(i).getString("verbal_post_transition_instruction");
                     instructions.add(postTransitionInstruction);}
-
                 if (maneuvers.getJSONObject(i).has("verbal_depart_instruction")){
                     String verbalDepartInstruction = maneuvers.getJSONObject(i).getString("verbal_depart_instruction");
                     instructions.add(verbalDepartInstruction);}
-
                 if (maneuvers.getJSONObject(i).has("verbal_arrive_instruction")){
                     String verbalArriveInstruction = maneuvers.getJSONObject(i).getString("arrive_instruction");
                     instructions.add(verbalArriveInstruction);}
-
                 if (maneuvers.getJSONObject(i).has("depart_instruction")){
                     String departInstruction = maneuvers.getJSONObject(i).getString("depart_instruction");
                     instructions.add(departInstruction);}
-//
             }
             //get the response code and some info from JSON
             //200 means we made a successful connection
             int status = resp.getStatusLine().getStatusCode();
-
             System.out.println(status);
             //create JSON data
-//          JSONString department = json.get("name");
-
-
             //put into web application (ModelAndView)
             //here, on our route.jsp page, we return an ArrayList called "instructions" through a model called "instructions"
             //We also return the status code (status) through a model called 'status'
-            ModelAndView moo = new ModelAndView("route");
-//            moo.addObject("instructions", instructions);
-
+            ModelAndView moo = new ModelAndView("resourceselector");
             moo.addObject("status", status);
             moo.addObject("instructions", instructions);
             return moo;
@@ -225,9 +161,7 @@ public class HomeController {
         } catch (Exception x) {
             x.printStackTrace();
         }
-
         //cue to read the log during debugging process, make the null into a user friendly message
         return null;
     }
-
     }

@@ -14,8 +14,14 @@ RequestMapping is ("/")/--%>
 ${message}<br />
 
 <%--Hyperlink that takes user to register form, which is in the register/jsp--%>
-
 <a href="register">Register for services</a>
+
+<%--Hyperlink that takes user to register form, which is in the register/jsp--%>
+<a href="resourceview">Resource View</a>
+
+<%--Hyperlink that takes user to register form, which is in the register/jsp--%>
+<a href="resourceselector">Resource List</a>
+
 
 </body>
 </html>

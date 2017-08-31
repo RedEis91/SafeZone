@@ -83,19 +83,6 @@ public class DAO {
             //used to construct String readResourcesCommand to append to Database query
             // when user is in need of this/these resource(s)
 
-            //byte values represent resources user is currently in need of.
-
-//            byte shelter = 0;
-//            byte clothing = 0;
-//            byte counseling = 0;
-//            byte healthcare = 0;
-//            byte education = 0;
-//            byte job = 0;
-//            byte female = 0;
-            //int male = 0;
-
-
-
             //db statement
             //String readResourcesCommand is a SQL query to select all rows, determined by user's need (which category of
             //resources they would like) such as Food, Shelter, Healthcare, Education, etc. on the resource request form
@@ -105,16 +92,6 @@ public class DAO {
 
             readResourcesCommand.setString(1, food);
             ResultSet results = readResourcesCommand.executeQuery();
-
-//                            " AND Shelter = 1 AND Clothing = 0 AND Counseling = 0 AND Healthcare = 0 " +
-//                            "AND Education = 0 AND Job = 1 AND Female = 1 and Male = 0";
-
-
-//                    +food+ ", Shelter = " + shelter + ", Clothing = " + clothing + ", Counseling = " + counseling
-//                    + ", Healthcare = " + healthcare + ", Education = " + education + ", Job = " + job  + ", Female = " + female + ", Male = " + male;
-//            Statement readResources = mysqlConnection.createStatement();// creates the statement
-//
-//            ResultSet results = readResources.executeQuery(readResourcesCommand);// executes the statement
             // creates an empty array list called userResourceList that refers to our Resource class
             ArrayList<Resource> userResourceList = new ArrayList<Resource>();
 
@@ -152,8 +129,8 @@ public class DAO {
             String firstName,
             String lastName,
             long phoneNum,
-            String gender,
-            String birthDay,
+//            String gender,
+//            String birthDay,
             String email
     ) {
         //info from our first form on the register.jsp page is passed through to this method from our Home Controller in our
@@ -171,13 +148,13 @@ public class DAO {
             //this creates a SQL command to insert all of the info we received in this method (via the @RequestParams)
             //into their respective fields, in the users table in our db
             String addUserCommand = "INSERT INTO Users " +
-                    "(FirstName, LastName, PhoneNumber, GenderIdentify, DOB, Email) " +
+                    "(FirstName, LastName, PhoneNumber, Email) " +
                     "VALUES ('" +
                     firstName + "', '" +
                     lastName + "', '" +
                     phoneNum + "', '" +
-                    gender + "', '" +
-                    birthDay + "', '" +
+//                    gender + "', '" +
+//                    birthDay + "', '" +
                     email + "')";
 
             //debugging technique to make sure the SQL query was executed

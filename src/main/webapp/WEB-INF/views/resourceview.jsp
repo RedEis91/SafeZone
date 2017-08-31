@@ -7,13 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html>
 <head>
-    <title>Summary Page</title>
+    <title>Resource View</title>
 </head>
 <body>
-You are not alone, ${firstname}<br>
+You are not alone<br>
 Here is the <strong>entire</strong> list of SafeZone's Resource List:
 
 <%--For each loop below (Java) is being used via the JSTL tag library at the top of page. JSTL allows us to use java functions--%>
@@ -25,7 +24,7 @@ Here is the <strong>entire</strong> list of SafeZone's Resource List:
 <div class="resource">
     <!--Returns entire list of resources in our db and certain info. for each resource!-->
     <%--${item.ID}--%>
-  <h1> ${item.organization} </h1>
+  <h3> ${item.organization} </h3>
         <p> ${item.description} </p>
         <span>Homepage: </span><a href="http://${item.website}"> ${item.website} </a>
     ${item.phone}
@@ -36,22 +35,6 @@ Here is the <strong>entire</strong> list of SafeZone's Resource List:
 </c:forEach>
 
 </div>
-Here is a list of SafeZone's Resources whose <strong> category is "Food" </strong>:
 
-<%--"items" here allows us to refer to the arraylist (usList) in our for each loop and "var=item" allows us to refer to
-each element and its value --%>
-<%--in the arraylist--%>
-
-<c:forEach var="item" items="${usList}">
-    <div class="selectedResource">
-        <!--Returns list of resources where category selected is "Food" and their respective latitude and longitude values !-->
-
-   <h1 class="organization"> ${item.organization} </h1>
-    <p class="lat">Lat: ${item.latitude} </p>
-    <p class="lon">Lon: ${item.longitude}</p>
-
-</c:forEach>
-</div>
-<%-- ${resource} --%>
 </body>
 </html>
