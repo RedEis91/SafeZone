@@ -12,7 +12,7 @@
     <title>Resource View</title>
 </head>
 <body>
-You are not alone<br>
+You are not alone ${firstname}<br>
 Here is the <strong>entire</strong> list of SafeZone's Resource List:
 
 <%--For each loop below (Java) is being used via the JSTL tag library at the top of page. JSTL allows us to use java functions--%>
