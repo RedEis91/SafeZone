@@ -13,7 +13,7 @@
 </head>
 <body>
 
-
+<div id="wrap">
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -38,9 +38,43 @@
     </div>
 </nav>
 
-<img src="resources/imgs/logo.png" alt="Hands Logo Vector Copyright: freevector" class="logo">
 
 
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+
+            <img src="resources/imgs/logo.png" alt="Hands Logo Vector Copyright: freevector" class="logo">
+
+        </div>
+        <div class="col-md-4">
+
+            <p class="description">
+                SafeZone is a web application that connects valuable community resources to one of America's most vulnerable populations: Homeless Teens and Youth
+<br> <br>
+                Our mission:
+<br><br>
+                SafeZone is committed to help bridge the gap and help homeless youth find a stability and resources.  SafeZone lets them know "You are NOT alone".     </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+
+            </p>
+        </div>
+    </div>
+</div>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">&copy; 2017<script>new Date().getFullYear()>2017&&document.write("-"+new Date().getFullYear());</script> SafeZone & proudly maintained by Jared Eisenhauer, Nicholos Hatcher, David Valentine, Monique West. </span>
+        </div>
+    </footer>
+
+
+
+
+
+</div>
 </body>
 </html>

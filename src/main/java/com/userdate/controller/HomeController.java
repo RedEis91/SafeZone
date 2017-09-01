@@ -122,16 +122,6 @@ public class HomeController {
         return mv;
     }
 
-
-
-
-
-
-
-
-
-
-
     @RequestMapping("/register")
     public ModelAndView register () {
         return new ModelAndView("register", "inst",

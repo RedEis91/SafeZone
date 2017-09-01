@@ -254,7 +254,6 @@ public class DAO {
         }
     }
 
-
     public static boolean addUser(String firstName, String lastName, long phoneNum, String email) {
         //info from our first form on the register.jsp page is passed through to this method from our Home Controller in our
         //formhandler method

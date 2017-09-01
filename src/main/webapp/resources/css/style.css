@@ -6,9 +6,9 @@ body{
 }
 
 .logo {
-    max-width: 25%;
-    margin: 3%;
-
+    max-width: 34%;
+    margin: 15%;
+    margin-left: 35%;
 }
 
 h1  {
@@ -25,3 +25,19 @@ a   {
     color: #FBEC5D;
 }
 
+.text-muted {
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.bg-faded {
+    background-color: #603C9A;
+}
+
+.description {
+    font-size: 9px;
+    margin: 4%;
+    margin-top: 17%;
+
+}

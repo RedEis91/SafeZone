@@ -21,8 +21,6 @@ public class Resource {
     private boolean male;
     private float latitude;
     private float longitude;
-
-
     //Constructs an instance of a Resource Object using organization name, latitude and longitude
     // takes lat,lon info from form to construct API call string that then generates a bus route to that Resource
     public Resource(String Organization, float latitude, float longitude) {

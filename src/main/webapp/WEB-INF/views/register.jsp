@@ -45,5 +45,10 @@
     </fieldset>
     <input type="submit" name="submit" value="Register">
 </form>
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">&copy; 2017<script>new Date().getFullYear()>2017&&document.write("-"+new Date().getFullYear());</script> SafeZone & proudly maintained by Jared Eisenhauer, Nicholos Hatcher, David Valentine, Monique West. </span>
+    </div>
+</footer>
 </body>
 </html>
