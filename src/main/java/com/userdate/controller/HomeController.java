@@ -67,8 +67,7 @@ public class HomeController {
                 @RequestParam("firstname") String firstName,
                 @RequestParam("lastname") String lastName,
                 @RequestParam("phonenum") long phoneNum,
-                @RequestParam("email") String email
-    )
+                @RequestParam("email") String email)
 
         {
             boolean result = DAO.addUser(firstName,lastName,phoneNum, email);
@@ -117,30 +116,21 @@ public class HomeController {
             JSONArray maneuvers = json.getJSONObject("trip").getJSONArray("legs").getJSONObject(0).getJSONArray("maneuvers");
             ArrayList<String> instructions = new ArrayList<String>();
             for (int i = 0; i < maneuvers.length(); i++) {
-                if (maneuvers.getJSONObject(i).has("arrive_instruction") ){
-                    String arriveInstruction = maneuvers.getJSONObject(i).getString("arrive_instruction");
-                    instructions.add(arriveInstruction);}
+
                 if (maneuvers.getJSONObject(i).has("verbal_pre_transition_instruction")){
-                    String preTransitionInstruction = maneuvers.getJSONObject(i).getString("verbal_pre_transition_instruction");
-                    instructions.add(preTransitionInstruction);}
-                if (maneuvers.getJSONObject(i).has("verbal_transition_alert_instruction")){
-                    String transitionAlertInstruction = maneuvers.getJSONObject(i).getString("verbal_transition_alert_instruction");
-                    instructions.add(transitionAlertInstruction);}
-                if (maneuvers.getJSONObject(i).has("instruction")){
-                    String instruction = maneuvers.getJSONObject(i).getString("instruction");
-                    instructions.add(instruction);}
-                if (maneuvers.getJSONObject(i).has("verbal_post_transition_instruction")){
-                    String postTransitionInstruction = maneuvers.getJSONObject(i).getString("verbal_post_transition_instruction");
-                    instructions.add(postTransitionInstruction);}
+                    String verbalPreTransitionInstruction = maneuvers.getJSONObject(i).getString("verbal_pre_transition_instruction");
+                    instructions.add(verbalPreTransitionInstruction);}
                 if (maneuvers.getJSONObject(i).has("verbal_depart_instruction")){
                     String verbalDepartInstruction = maneuvers.getJSONObject(i).getString("verbal_depart_instruction");
                     instructions.add(verbalDepartInstruction);}
+                if (maneuvers.getJSONObject(i).has("verbal_post_transition_instruction")){
+                    String verbalPostTransitionInstruction = maneuvers.getJSONObject(i).getString("verbal_post_transition_instruction");
+                    instructions.add(verbalPostTransitionInstruction);}
                 if (maneuvers.getJSONObject(i).has("verbal_arrive_instruction")){
-                    String verbalArriveInstruction = maneuvers.getJSONObject(i).getString("arrive_instruction");
+                    String verbalArriveInstruction = maneuvers.getJSONObject(i).getString("verbal_arrive_instruction");
                     instructions.add(verbalArriveInstruction);}
-                if (maneuvers.getJSONObject(i).has("depart_instruction")){
-                    String departInstruction = maneuvers.getJSONObject(i).getString("depart_instruction");
-                    instructions.add(departInstruction);}
+
+
             }
             //get the response code and some info from JSON
             //200 means we made a successful connection
@@ -157,7 +147,7 @@ public class HomeController {
         }
         catch (JSONException x) {
             x.printStackTrace();
-            System.out.println("JSON!!!");
+            System.out.println("JSON Exception!!!");
         } catch (Exception x) {
             x.printStackTrace();
         }

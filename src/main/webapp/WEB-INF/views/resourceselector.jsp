@@ -7,31 +7,42 @@
     <title>Resource Selector</title>
 </head>
 <body onload="getLocation()">
-<h1>What do you need today?</h1>
+
+
+
 
     <form action="/filterResources" method="put">
-        <input type="checkbox" name="food" value="1"> Food <br>
-        <input type="submit" value="Submit">
+
+        <div id="resourceSelector">
+            <h1>What do you need today?</h1>
+            <input type="checkbox" name="food" value="1"> Food <br>
+        <input type="submit" value="Submit" >
+            <p>Please allow SafeZone to access your device's location.
+                This information will not be saved or used for anything other than providing you directions to your selected resource.
+            </p>
+        </div>
     </form>
-<p>Please allow SafeZone to access your device's location.
-This information will not be saved or used for anything other than providing you directions to your selected resource.
-</p>
+
+</div>
+
+
+
 <c:forEach var="item" items="${usList}">
-<div class="selectedResource">
+<div class="selectedResource" onload="hideMe()">
     <!--Returns list of resources where category selected is "Food" and their respective latitude and longitude values !-->
 
     <h1 class="organization"> ${item.organization} </h1>
-    <p class="lat">Lat: ${item.latitude} </p>
-    <p class="lon">Lon: ${item.longitude}</p>
+    <%--<p class="lat">Lat: ${item.latitude} </p>--%>
+    <%--<p class="lon">Lon: ${item.longitude}</p>--%>
 
         <p ID="demo"></p>
 
         <form action="route" method="post">
 
-            <input type="text" name="lat"> </input>
-            <input type="text" name="lon"> </input>
-            <input type="text" name="rLat" value="${item.latitude}"> </input>
-            <input type="text" name="rLon" value="${item.longitude}"> </input>
+            <input type="hidden" name="lat"> </input>
+            <input type="hidden" name="lon"> </input>
+            <input type="hidden" name="rLat" value="${item.latitude}"> </input>
+            <input type="hidden" name="rLon" value="${item.longitude}"> </input>
             <input  type="submit" name="submit" value="Get Directions to ${item.organization}" >
 
         </form>
@@ -47,8 +58,17 @@ This information will not be saved or used for anything other than providing you
 </div>
 
     <script >
+        function hideMe() {
+            var x = document.getElementById('resourceSelector');
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+
         var x = document.getElementById("demo");
-        var pos;
+
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -75,6 +95,10 @@ This information will not be saved or used for anything other than providing you
 
 
         }
+
+
+
+
 
     </script>
 
