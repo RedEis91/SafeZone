@@ -4,7 +4,7 @@ body{
     color: #FFFFFF;
     background-color: #011C51;
 }
-
+.a.nav-link, p.navbar-text, .navbar-light .navbar-nav .active>.nav-link {color: white;}
 .logo {
     max-width: 34%;
     margin: 15%;
@@ -34,7 +34,7 @@ a   {
 .text-muted {
     font-size: 12px;
     font-family: 'Open Sans', sans-serif;
-
+    color: white;
 }
 
 .bg-faded {

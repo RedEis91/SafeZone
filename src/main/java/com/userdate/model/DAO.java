@@ -269,7 +269,7 @@ public class DAO {
 
             //this creates a SQL command to insert all of the info we received in this method (via the @RequestParams)
             //into their respective fields, in the users table in our db
-            String addUserCommand = "INSERT INTO Users " +
+            String addUserCommand = "INSERT INTO users " +
                     "(FirstName, LastName, PhoneNumber, Email) " +
                     "VALUES ('" +
                     firstName + "', '" +
