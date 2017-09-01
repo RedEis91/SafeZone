@@ -25,6 +25,12 @@ a   {
     color: #FBEC5D;
 }
 
+.nav-link{
+    color: #FBEC5D;
+    background-color: #603C9A;
+
+}
+
 .text-muted {
     font-size: 12px;
     font-family: 'Open Sans', sans-serif;
@@ -36,7 +42,7 @@ a   {
 }
 
 .description {
-    font-size: 9px;
+    font-size: 11px;
     margin: 4%;
     margin-top: 17%;
 

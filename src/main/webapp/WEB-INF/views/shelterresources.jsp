@@ -15,7 +15,11 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#"><h1>${title}</h1></a>
+
     <div class="collapse navbar-collapse" id="navbarText">
+        <p class="navbar-text">
+            ${message}
+        </p>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <%--Hyperlink that takes user to register form, which is in the register/jsp--%>
@@ -28,9 +32,7 @@
                 <a class="nav-link" href="register">Register with SafeZone</a>
             </li>
         </ul>
-        <p class="navbar-text">
-            ${message}
-        </p>
+
     </div>
 </nav>
 <c:forEach var="item" items="${shelterList}">
