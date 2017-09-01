@@ -11,29 +11,24 @@ public class DAO {
     public static ArrayList<Resource> getResourceList() {
         //connection info was pulled out into DBCredentials
         //so that file can be hidden
-
         try {
             // Load driver
             Class.forName("com.mysql.jdbc.Driver");
             // DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-
             // create the db connection object
             Connection mysqlConnection;
             mysqlConnection = DriverManager.getConnection(
                     DBCredentials.DB_ADDRESS,
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
-
             // create the db statement
             //this statements selects the ID, Org name, zip, website, phone number, address and description for all of our
             //resources in our resources table in our db (row by row(
             String readResourcesCommand = "select ID, Organization, Zip, Website, Phone, Address, Description from resources";
             Statement readResources = mysqlConnection.createStatement();// creates the statement
-
             ResultSet results = readResources.executeQuery(readResourcesCommand);// executes the statement
             // creates an empty array list called resourceList that references our Resource class
             ArrayList<Resource> resourceList = new ArrayList<Resource>();
-
             // map from the ResultSet to the ArrayList
             //this while loop says that for each row that was grabbed from the db (or 'while there is a row that we grabbed from our db)
             //create an object of our Resource class called 'temp" that constructs an object (sets that object's values)
@@ -49,7 +44,6 @@ public class DAO {
                 resourceList.add(temp);
 
             }
-
             //debugging
             for (int i = 0; i > resourceList.size(); i++) {
                 System.out.println(resourceList.get(i));
@@ -64,37 +58,25 @@ public class DAO {
         }
     }
 
-
-
-    public static ArrayList<Resource> getUserResourceList(String food){
+    public static ArrayList<Resource> getFoodResourceList(){
         try {
             // Load driver
             Class.forName("com.mysql.jdbc.Driver");
             // DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-
             // create the db connection object
             Connection mysqlConnection;
             mysqlConnection = DriverManager.getConnection(
                     DBCredentials.DB_ADDRESS,
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
-
-            //Byte values representing the boolean values of the categories of our database
-            //used to construct String readResourcesCommand to append to Database query
-            // when user is in need of this/these resource(s)
-
             //db statement
             //String readResourcesCommand is a SQL query to select all rows, determined by user's need (which category of
             //resources they would like) such as Food, Shelter, Healthcare, Education, etc. on the resource request form
-            PreparedStatement readResourcesCommand =
-                    //give me all rows from resources table in safezone database WHERE.....(these conditions are met)
-                    mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Food = ?");
-
-            readResourcesCommand.setString(1, food);
+            //give me all rows from resources table in safezone database WHERE Food applies
+            PreparedStatement readResourcesCommand = mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Food = 1");
             ResultSet results = readResourcesCommand.executeQuery();
             // creates an empty array list called userResourceList that refers to our Resource class
             ArrayList<Resource> userResourceList = new ArrayList<Resource>();
-
             // map from the ResultSet to the ArrayList
             //this while loop says that for each row that was grabbed from the db (or 'while there is a row that we grabbed from our db)
             //create an object of our Resource class called 'temp" that constructs an object (sets that object's values)
@@ -105,34 +87,175 @@ public class DAO {
             {
                 Resource temp = new Resource(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
                 userResourceList.add(temp);
-
             }
-
             //debugging
             for (int i = 0; i > userResourceList.size(); i++) {
                 System.out.println(userResourceList.get(i));
             }
-
             //our userResourceList is returned to our Home Controller in our viewresourceList method
+            return userResourceList;
+            }
+        catch(Exception ex)
+            {
+            ex.printStackTrace();
+            return null; //null result indicates an issue
+            }
+    }
+
+    public static ArrayList<Resource> getShelterResourceList(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(DBCredentials.DB_ADDRESS, DBCredentials.USERNAME, DBCredentials.PASSWORD);
+            PreparedStatement readResourcesCommand = mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Shelter = 1");
+            ResultSet results = readResourcesCommand.executeQuery();
+            ArrayList<Resource> userResourceList = new ArrayList<Resource>();
+            while(results.next())
+            {
+                Resource temp = new Resource(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
+                userResourceList.add(temp);
+            }
+            for (int i = 0; i > userResourceList.size(); i++) {
+                System.out.println(userResourceList.get(i));
+            }
             return userResourceList;
         }
         catch(Exception ex)
         {
             ex.printStackTrace();
-            return null; //null result indicates an issue
+            return null;
         }
-
-
     }
 
-    public static boolean addUser(
-            String firstName,
-            String lastName,
-            long phoneNum,
-//            String gender,
-//            String birthDay,
-            String email
-    ) {
+    public static ArrayList<Resource> getClothingResourceList(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(DBCredentials.DB_ADDRESS, DBCredentials.USERNAME, DBCredentials.PASSWORD);
+            PreparedStatement readResourcesCommand = mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Clothing = 1");
+            ResultSet results = readResourcesCommand.executeQuery();
+            ArrayList<Resource> userResourceList = new ArrayList<Resource>();
+            while(results.next())
+            {
+                Resource temp = new Resource(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
+                userResourceList.add(temp);
+            }
+            for (int i = 0; i > userResourceList.size(); i++) {
+                System.out.println(userResourceList.get(i));
+            }
+            return userResourceList;
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<Resource> getCounselingResourceList(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(DBCredentials.DB_ADDRESS, DBCredentials.USERNAME, DBCredentials.PASSWORD);
+            PreparedStatement readResourcesCommand = mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Counseling = 1");
+            ResultSet results = readResourcesCommand.executeQuery();
+            ArrayList<Resource> userResourceList = new ArrayList<Resource>();
+            while(results.next())
+            {
+                Resource temp = new Resource(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
+                userResourceList.add(temp);
+            }
+            for (int i = 0; i > userResourceList.size(); i++) {
+                System.out.println(userResourceList.get(i));
+            }
+            return userResourceList;
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<Resource> getHealthcareResourceList(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(DBCredentials.DB_ADDRESS, DBCredentials.USERNAME, DBCredentials.PASSWORD);
+            PreparedStatement readResourcesCommand = mysqlConnection.prepareStatement("SELECT Organization, Latitude, Longitude FROM resources WHERE Healthcare = 1");
+            ResultSet results = readResourcesCommand.executeQuery();
+            ArrayList<Resource> userResourceList = new ArrayList<Resource>();
+            while(results.next())
+            {
+                Resource temp = new Resource(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
+                userResourceList.add(temp);
+            }
+            for (int i = 0; i > userResourceList.size(); i++) {
+                System.out.println(userResourceList.get(i));
+            }
+            return userResourceList;
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<Resource> getEducationResourceList(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(DBCredentials.DB_ADDRESS, DBCredentials.USERNAME, DBCredentials.PASSWORD);
+            PreparedStatement readResourcesCommand = mysqlConnection.prepareStatement("SELECT " +
+                    "Organization, Latitude, Longitude FROM resources WHERE Education = 1");
+            ResultSet results = readResourcesCommand.executeQuery();
+            ArrayList<Resource> userResourceList = new ArrayList<Resource>();
+            while(results.next())
+            {
+                Resource temp = new Resource(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
+                userResourceList.add(temp);
+            }
+            for (int i = 0; i > userResourceList.size(); i++) {
+                System.out.println(userResourceList.get(i));
+            }
+            return userResourceList;
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<Resource> getJobResourceList(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(DBCredentials.DB_ADDRESS, DBCredentials.USERNAME, DBCredentials.PASSWORD);
+            PreparedStatement readResourcesCommand = mysqlConnection.prepareStatement("SELECT " +
+                    "Organization, Latitude, Longitude FROM resources WHERE Job = 1");
+            ResultSet results = readResourcesCommand.executeQuery();
+            ArrayList<Resource> userResourceList = new ArrayList<Resource>();
+            while(results.next())
+            {
+                Resource temp = new Resource(results.getString("Organization"), results.getFloat("Latitude"),results.getFloat("Longitude"));
+                userResourceList.add(temp);
+            }
+            for (int i = 0; i > userResourceList.size(); i++) {
+                System.out.println(userResourceList.get(i));
+            }
+            return userResourceList;
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static boolean addUser(String firstName, String lastName, long phoneNum, String email) {
         //info from our first form on the register.jsp page is passed through to this method from our Home Controller in our
         //formhandler method
 

@@ -45,16 +45,92 @@ public class HomeController {
        return mv;
     }
 
-    @RequestMapping("/filterResources")
-    public ModelAndView filterResources (@RequestParam("food") String food) {
-        ArrayList<Resource> userResourceList = DAO.getUserResourceList(food);
-        if (userResourceList == null){
-            return new ModelAndView("error","errmsg","No user resource list - null");
+    @RequestMapping("/foodResources")
+    public ModelAndView foodResources () {
+        ArrayList<Resource> foodResourceList = DAO.getFoodResourceList();
+        if (foodResourceList == null){
+            return new ModelAndView("error","errmsg","No food resource list - null");
         }
-        ModelAndView mv = new ModelAndView("resourceselector");
-        mv.addObject("usList",userResourceList);
+        ModelAndView mv = new ModelAndView("foodresources");
+        mv.addObject("foodList",foodResourceList);
         return mv;
     }
+
+    @RequestMapping("/shelterResources")
+    public ModelAndView shelterResources () {
+        ArrayList<Resource> shelterResourceList = DAO.getShelterResourceList();
+        if (shelterResourceList == null){
+            return new ModelAndView("error","errmsg","No shelter resource list - null");
+        }
+        ModelAndView mv = new ModelAndView("shelterresources");
+        mv.addObject("shelterList",shelterResourceList);
+        return mv;
+    }
+
+    @RequestMapping("/clothingResources")
+    public ModelAndView clothingResources () {
+        ArrayList<Resource> clothingResourceList = DAO.getClothingResourceList();
+        if (clothingResourceList == null){
+            return new ModelAndView("error","errmsg","No clothing resource list - null");
+        }
+        ModelAndView mv = new ModelAndView("clothingresources");
+        mv.addObject("clothingList",clothingResourceList);
+        return mv;
+    }
+
+    @RequestMapping("/counselingResources")
+    public ModelAndView counselingResources () {
+        ArrayList<Resource> counselingResourceList = DAO.getCounselingResourceList();
+        if (counselingResourceList == null){
+            return new ModelAndView("error","errmsg","No counseling resource list - null");
+        }
+        ModelAndView mv = new ModelAndView("counselingresources");
+        mv.addObject("counselingList",counselingResourceList);
+        return mv;
+    }
+
+    @RequestMapping("/healthcareResources")
+    public ModelAndView healthcareResources () {
+        ArrayList<Resource> healthcareResourceList = DAO.getHealthcareResourceList();
+        if (healthcareResourceList == null){
+            return new ModelAndView("error","errmsg","No healthcare resource list - null");
+        }
+        ModelAndView mv = new ModelAndView("healthcareresources");
+        mv.addObject("healthcareList",healthcareResourceList);
+        return mv;
+    }
+
+    @RequestMapping("/educationResources")
+    public ModelAndView educationResources () {
+        ArrayList<Resource> educationResourceList = DAO.getEducationResourceList();
+        if (educationResourceList == null){
+            return new ModelAndView("error","errmsg","No education resource list - null");
+        }
+        ModelAndView mv = new ModelAndView("educationresources");
+        mv.addObject("educationList",educationResourceList);
+        return mv;
+    }
+
+    @RequestMapping("/jobResources")
+    public ModelAndView jobResources () {
+        ArrayList<Resource> jobResourceList = DAO.getJobResourceList();
+        if (jobResourceList == null){
+            return new ModelAndView("error","errmsg","No job resource list - null");
+        }
+        ModelAndView mv = new ModelAndView("jobresources");
+        mv.addObject("jobList",jobResourceList);
+        return mv;
+    }
+
+
+
+
+
+
+
+
+
+
 
     @RequestMapping("/register")
     public ModelAndView register () {
@@ -84,7 +160,7 @@ public class HomeController {
             return mv;
         }
 
-    @RequestMapping("/route")
+    @RequestMapping("/directions")
     public ModelAndView route (@RequestParam("lat") String userLat,
                                @RequestParam("lon") String userLon,
                                @RequestParam("rLat") String resourceLat,
@@ -129,8 +205,6 @@ public class HomeController {
                 if (maneuvers.getJSONObject(i).has("verbal_arrive_instruction")){
                     String verbalArriveInstruction = maneuvers.getJSONObject(i).getString("verbal_arrive_instruction");
                     instructions.add(verbalArriveInstruction);}
-
-
             }
             //get the response code and some info from JSON
             //200 means we made a successful connection
@@ -140,7 +214,7 @@ public class HomeController {
             //put into web application (ModelAndView)
             //here, on our route.jsp page, we return an ArrayList called "instructions" through a model called "instructions"
             //We also return the status code (status) through a model called 'status'
-            ModelAndView moo = new ModelAndView("resourceselector");
+            ModelAndView moo = new ModelAndView("directions");
             moo.addObject("status", status);
             moo.addObject("instructions", instructions);
             return moo;

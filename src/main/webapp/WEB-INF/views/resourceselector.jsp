@@ -5,102 +5,74 @@
 <html>
 <head>
     <title>Resource Selector</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link href="resources/css/style.css" rel="stylesheet"/>
 </head>
-<body onload="getLocation()">
+<body>
+
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#"><h1>${title}</h1></a>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <%--Hyperlink that takes user to register form, which is in the register/jsp--%>
+                <a class="nav-link" href="/">Homepage <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><form action="/foodResources" method="put">
+                    <input type="submit" value="Food">
+                </form></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><form action="/shelterResources" method="put">
+                    <input type="submit" value="Shelter">
+                </form></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><form action="/clothingResources" method="put">
+                    <input type="submit" value="Clothing">
+                </form></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><form action="/counselingResources" method="put">
+                    <input type="submit" value="Counseling">
+                </form></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><form action="/healthcareResources" method="put">
+                    <input type="submit" value="Healthcare">
+                </form></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><form action="/educationResources" method="put">
+                    <input type="submit" value="Education">
+                </form></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><form action="/jobResources" method="put">
+                    <input type="submit" value="Jobs">
+                </form></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="resourceview">All Resources</a>
+            </li>
+        </ul>
+        <p class="navbar-text">
+            ${message}
+        </p>
+    </div>
+</nav>
+
+<img src="resources/imgs/logo.png" alt="Hands Logo Vector Copyright: freevector" class="logo">
 
 
-
-
-    <form action="/filterResources" method="put">
-
-        <div id="resourceSelector">
-            <h1>What do you need today?</h1>
-            <input type="checkbox" name="food" value="1"> Food <br>
-        <input type="submit" value="Submit" >
-            <p>Please allow SafeZone to access your device's location.
-                This information will not be saved or used for anything other than providing you directions to your selected resource.
-            </p>
-        </div>
-    </form>
-
-</div>
-
-
-
-<c:forEach var="item" items="${usList}">
-<div class="selectedResource" onload="hideMe()">
-    <!--Returns list of resources where category selected is "Food" and their respective latitude and longitude values !-->
-
-    <h1 class="organization"> ${item.organization} </h1>
-    <%--<p class="lat">Lat: ${item.latitude} </p>--%>
-    <%--<p class="lon">Lon: ${item.longitude}</p>--%>
-
-        <p ID="demo"></p>
-
-        <form action="route" method="post">
-
-            <input type="hidden" name="lat"> </input>
-            <input type="hidden" name="lon"> </input>
-            <input type="hidden" name="rLat" value="${item.latitude}"> </input>
-            <input type="hidden" name="rLon" value="${item.longitude}"> </input>
-            <input  type="submit" name="submit" value="Get Directions to ${item.organization}" >
-
-        </form>
-
-    </c:forEach>
-</div>
-
-
-<div class="stepByStepDirections">
-    <c:forEach var="item" items="${instructions}">
-    <p>${item}</p>
-</c:forEach>
-</div>
-
-    <script >
-        function hideMe() {
-            var x = document.getElementById('resourceSelector');
-            if (x.style.display === 'none') {
-                x.style.display = 'block';
-            } else {
-                x.style.display = 'none';
-            }
-        }
-
-        var x = document.getElementById("demo");
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            <!-- Might be "NodeList" !-->
-            var userLatitude = document.querySelectorAll("[name=lat]");
-            var userLongitude = document.querySelectorAll("[name=lon]");
-
-            <!-- Going into object, reassign value for key value pair (lat = "") !-->
-            for (var i = 0; i < userLatitude.length; i++){
-                userLatitude[i].value = lat;
-            }
-
-            for (var i = 0; i < userLongitude.length; i++) {
-                userLongitude[i].value = lon;
-            }
-
-
-        }
-
-
-
-
-
-    </script>
 
 </body>
 </html>
